@@ -19,5 +19,16 @@ services:
     ports:
       - 8080:8080
 
+  php:
+    restart: always
+    build:
+      context: .
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+
 volumes:
   kikekaneDB:
