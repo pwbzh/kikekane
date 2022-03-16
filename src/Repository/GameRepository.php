@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\GameEntity;
+
 class GameRepository
 {
     private $database;
@@ -11,13 +13,30 @@ class GameRepository
         $this->database = $database;
     }
 
+    private function setInstanceFromRow(array $row)
+    {
+        $game = new GameEntity();
+        $game->setId($row[0]);
+        $game->setLabel($row[1]);
+        $game->setYear($row[2]);
+        $game->setOpenBets($row[3]);
+
+        return $game;
+    }
+
     public function findAll(): array
     {
-        $sqlRequest = 'SELECT * FROM game';
+        $sqlRequest = 'SELECT id, label, year, open_bets FROM game';
 
         $sth = $this->database->prepare($sqlRequest);
         $sth->execute();
 
-        return $sth->fetchAll();
+        $games = array();
+
+        while ($row = $sth->fetch(\PDO::FETCH_NUM, \PDO::FETCH_ORI_NEXT)) {
+            $games[$row[0]] = $this->setInstanceFromRow($row);
+        }
+
+        return $games;
     }
 }
