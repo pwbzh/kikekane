@@ -1,11 +1,20 @@
 <?php
 namespace App\Controller;
 
+use App\Service\Database;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GameController
+class GameController extends AbstractController
 {
+    private $database;
+
+    public function __construct(Database $database)
+    {
+        $this->database = $database->getDatabase();
+    }
+
     /**
     * @Route("/games/")
     */
