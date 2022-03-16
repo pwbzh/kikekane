@@ -50,3 +50,6 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
+# PHP Coding Standards Fixer
+.php-cs-fixer.cache
