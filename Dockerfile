@@ -16,8 +16,6 @@ RUN echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | tee /etc/apt/sour
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
-WORKDIR /var/www/public
-
-CMD php -S 0.0.0.0:9000 index.php
+CMD php -S 0.0.0.0:9000 -t public/
 
 EXPOSE 9000

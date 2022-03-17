@@ -20,6 +20,7 @@ class GameController extends AbstractController
     }
 
     /**
+    * @Route("/")
     * @Route("/games/")
     */
     public function list(): Response

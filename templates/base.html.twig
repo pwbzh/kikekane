@@ -3,9 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Kikékané{% endblock %}</title>
+
+        <link href="{{ asset('css/style.min.css') }}" rel="stylesheet"/>
     </head>
     <body>
-        <h1>Kikékané</h1>
-        {% block body %}{% endblock %}
+        <div class="container">
+            <h1>Kikékané</h1>
+            {% block body %}{% endblock %}
+        </div>
+
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     </body>
 </html>
