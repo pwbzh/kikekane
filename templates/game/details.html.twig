@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+<span class="badge bg-info">{{ game.year|date("Y") }}</span>
+<span class="badge {% if game_users|length == 0 %}bg-warning{% else %}bg-secondary{% endif %}">{% if game_users %}{{ game_users|length }} {% if game_users|length > 1 %}joueurs{% else %}joueur{% endif %}{% else %}0 joueur{% endif %}</span>
+<span class="badge {% if game.isOpenBets %}bg-success{% else %}bg-danger{% endif %}">{% if game.isOpenBets %}Paris ouverts{% else %}Paris fermés{% endif %}</span>
 {% endblock %}
