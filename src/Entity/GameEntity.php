@@ -29,12 +29,12 @@ class GameEntity
         return $this->label;
     }
 
-    public function setYear(int $year)
+    public function setYear(\DateTime $year)
     {
         $this->year = $year;
     }
 
-    public function getYear(): ?int
+    public function getYear(): ?\DateTime
     {
         return $this->year;
     }
