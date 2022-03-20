@@ -40,4 +40,21 @@ class UserRepository
 
         return $users;
     }
+
+    public function findGameUsers(int $gameId): array
+    {
+        $sqlRequest = 'SELECT id, login, email, is_admin, last_login_datetime FROM user WHERE id IN (SELECT user_id FROM game_user WHERE game_id = :game_id)';
+
+        $sth = $this->database->prepare($sqlRequest);
+        $sth->bindParam('game_id', $gameId, \PDO::PARAM_INT);
+        $sth->execute();
+
+        $users = array();
+
+        while ($row = $sth->fetch(\PDO::FETCH_NUM, \PDO::FETCH_ORI_NEXT)) {
+            $users[$row[0]] = $this->setInstanceFromRow($row);
+        }
+
+        return $users;
+    }
 }

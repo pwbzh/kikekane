@@ -31,11 +31,7 @@ class GameEntity
 
     public function setYear(\DateTime $year)
     {
-        if ($year && $year instanceof \DateTime) {
-            $this->year = $year;
-        } elseif ($year && !($year instanceof \DateTime)) {
-            throw new \Exception('Invalid type.');
-        }
+        $this->year = $year;
     }
 
     public function getYear(): ?\DateTime

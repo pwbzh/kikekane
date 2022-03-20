@@ -34,11 +34,7 @@ class PublicFigureEntity
 
     public function setBirthDate(\DateTime $birthDate)
     {
-        if ($birthDate && $birthDate instanceof \DateTime) {
-            $this->birthDate = $birthDate;
-        } elseif ($birthDate && !($birthDate instanceof \DateTime)) {
-            throw new \Exception('Invalid type.');
-        }
+        $this->birthDate = $birthDate;
     }
 
     public function getBirthDate(): ?\DateTime
@@ -46,13 +42,9 @@ class PublicFigureEntity
         return $this->birthDate;
     }
 
-    public function setDeathDate($deathDate)
+    public function setDeathDate(?\DateTime $deathDate)
     {
-        if ($deathDate && $deathDate instanceof \DateTime) {
-            $this->deathDate = $deathDate;
-        } elseif ($deathDate && !($deathDate instanceof \DateTime)) {
-            throw new \Exception('Invalid type.');
-        }
+        $this->deathDate = $deathDate;
     }
 
     public function getDeathDate(): ?\DateTime
@@ -60,7 +52,7 @@ class PublicFigureEntity
         return $this->deathDate;
     }
 
-    public function setWikipedia(string $wikipedia)
+    public function setWikipedia(?string $wikipedia)
     {
         $this->wikipedia = $wikipedia;
     }
@@ -70,7 +62,7 @@ class PublicFigureEntity
         return $this->wikipedia;
     }
 
-    public function setTwitter(string $twitter)
+    public function setTwitter(?string $twitter)
     {
         $this->twitter = $twitter;
     }
@@ -80,7 +72,7 @@ class PublicFigureEntity
         return $this->twitter;
     }
 
-    public function setNote(string $note)
+    public function setNote(?string $note)
     {
         $this->note = $note;
     }

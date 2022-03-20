@@ -30,7 +30,7 @@ class UserEntity
         return $this->login;
     }
 
-    public function setEmail(string $email)
+    public function setEmail(?string $email)
     {
         $this->email = $email;
     }
@@ -50,13 +50,9 @@ class UserEntity
         return $this->isAdmin;
     }
 
-    public function setLastLoginDatetime($lastLoginDatetime)
+    public function setLastLoginDatetime(?\DateTime $lastLoginDatetime)
     {
-        if ($lastLoginDatetime && $lastLoginDatetime instanceof \DateTime) {
-            $this->lastLoginDatetime = $lastLoginDatetime;
-        } elseif ($lastLoginDatetime && !($lastLoginDatetime instanceof \DateTime)) {
-            throw new \Exception('Invalid type.');
-        }
+        $this->lastLoginDatetime = $lastLoginDatetime;
     }
 
     public function getLastLoginDatetime(): ?\DateTime
