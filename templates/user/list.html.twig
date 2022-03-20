@@ -6,7 +6,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ user.login }}</h5>
-                    {% if user.isAdmin %}<span class="badge bg-info">Administrateur</span>{% endif %} {% if user.lastLoginDatetime %}<span class="badge bg-secondary">{{ user.lastLoginDatetime|date("d/m/Y H:i:s") }}</span>{% endif %}
+                    {% if user.isAdmin %}<span class="badge bg-info">Administrateur</span>{% endif %} {% if user.lastLoginDatetime %}<span class="badge bg-secondary">Dernière connexion : {{ user.lastLoginDatetime|date("d/m/Y H:i:s") }}</span>{% endif %}
                     {% if user.email %}<p class="mb-0 mt-2"><a class="text-light me-3" href="mailto:{{ user.email }}" target="_blank">{{ user.email }}</a>{% endif %}
                 </div>
             </div>
