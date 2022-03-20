@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if public_figures and public_figures|length > 0 %}
+        {% for public_figure in public_figures %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ public_figure.name }}</h5>
+                    <span class="badge {% if not public_figure.deathDate %}bg-danger{% else %}bg-secondary{% endif %}">{{ public_figure.birthDate|date("d/m/Y") }} > {% if public_figure.deathDate %}{{ public_figure.deathDate|date("d/m/Y") }}{% else %}?{% endif %}</span>
+                    {% if public_figure.wikipedia or public_figure.twitter %}<p class="mb-0 mt-2">{% if public_figure.wikipedia %}<a class="text-light me-3" href="{{ public_figure.wikipedia }}" target="_blank">Wikipédia</a>{% endif %}{% if public_figure.twitter %}<a class="text-light" href="{{ public_figure.twitter }}" target="_blank">Twitter</a>{% endif %}</p>{% endif %}
+                    {% if public_figure.note %}<pre class="mb-0 mt-3 bg-secondary p-2 rounded">{{ public_figure.note }}</pre>{% endif %}
+                </div>
+            </div>
+        {% endfor %}
+{% endif %}
+{% endblock %}

@@ -8,6 +8,8 @@ class PublicFigureEntity
     private $name;
     private $birthDate;
     private $deathDate;
+    private $wikipedia;
+    private $twitter;
     private $note;
 
     public function setId(int $id)
@@ -32,7 +34,11 @@ class PublicFigureEntity
 
     public function setBirthDate(\DateTime $birthDate)
     {
-        $this->birthDate = $birthDate;
+        if ($birthDate && $birthDate instanceof \DateTime) {
+            $this->birthDate = $birthDate;
+        } elseif ($birthDate && !($birthDate instanceof \DateTime)) {
+            throw new \Exception('Invalid type.');
+        }
     }
 
     public function getBirthDate(): ?\DateTime
@@ -40,9 +46,13 @@ class PublicFigureEntity
         return $this->birthDate;
     }
 
-    public function setDeathDate(\DateTime $deathDate)
+    public function setDeathDate($deathDate)
     {
-        $this->deathDate = $deathDate;
+        if ($deathDate && $deathDate instanceof \DateTime) {
+            $this->deathDate = $deathDate;
+        } elseif ($deathDate && !($deathDate instanceof \DateTime)) {
+            throw new \Exception('Invalid type.');
+        }
     }
 
     public function getDeathDate(): ?\DateTime
