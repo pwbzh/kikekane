@@ -21,7 +21,7 @@ class GameController extends AbstractController
 
     /**
     * @Route("/")
-    * @Route("/games/")
+    * @Route("/games/", name="games_list")
     */
     public function list(): Response
     {

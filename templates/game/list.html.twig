@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h2>Parties</h2>
+<p class="lead">Parties</p>
 
 {% if games and games|length > 0 %}
-    <ul>
         {% for game in games %}
-            <li>{{ game.label }}</li>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ game.label }}</h5>
+                    <span class="badge bg-secondary">{{ game.year }}</span>
+                    <span class="badge {% if game.isOpenBets %}bg-success{% else %}bg-danger{% endif %}">{% if game.isOpenBets %}Paris ouverts{% else %}Paris fermés{% endif %}</span>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
 {% endif %}
 {% endblock %}

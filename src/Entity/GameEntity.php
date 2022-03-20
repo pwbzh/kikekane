@@ -44,7 +44,7 @@ class GameEntity
         $this->openBets = $openBets;
     }
 
-    public function getOpenBets(): ?bool
+    public function isOpenBets(): ?bool
     {
         return $this->openBets;
     }
