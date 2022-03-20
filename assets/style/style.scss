@@ -7,4 +7,15 @@ $card-bg: #495057;
 $card-border-color: #495057;
 $card-box-shadow: 0 .5rem 1rem rgba(#000000, .15);
 
-@import 'bootstrap/bootstrap.scss'
+@import 'bootstrap/bootstrap.scss';
+
+.kikekane-card-as-link {
+    color: $body-color !important;
+    text-decoration: none;
+
+    &:hover {
+        box-shadow: $box-shadow-lg;
+        border-color: #6c757d;
+        transition-duration: 300ms;
+    }
+}

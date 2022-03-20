@@ -3,14 +3,14 @@
 {% block body %}
 {% if games and games|length > 0 %}
         {% for game in games %}
-            <div class="card mb-3">
+            <a class="card kikekane-card-as-link mb-3" href="{{ path('games_details', {gameId: game.id}) }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ game.label }}</h5>
                     <span class="badge bg-info">{{ game.year|date("Y") }}</span>
                     <span class="badge {% if users_by_games[game.id] is not defined or (users_by_games[game.id] is defined and users_by_games[game.id]|length == 0) %}bg-warning{% else %}bg-secondary{% endif %}">{% if users_by_games[game.id] is defined %}{{ users_by_games[game.id]|length }} {% if users_by_games[game.id]|length > 1 %}joueurs{% else %}joueur{% endif %}{% else %}0 joueur{% endif %}</span>
                     <span class="badge {% if game.isOpenBets %}bg-success{% else %}bg-danger{% endif %}">{% if game.isOpenBets %}Paris ouverts{% else %}Paris fermés{% endif %}</span>
                 </div>
-            </div>
+            </a>
         {% endfor %}
 {% endif %}
 {% endblock %}

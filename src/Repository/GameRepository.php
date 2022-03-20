@@ -39,4 +39,19 @@ class GameRepository
 
         return $games;
     }
+
+    public function find($gameId): ?GameEntity
+    {
+        $sqlRequest = 'SELECT id, label, year, open_bets FROM game WHERE id = :game_id';
+
+        $sth = $this->database->prepare($sqlRequest);
+        $sth->bindParam('game_id', $gameId, \PDO::PARAM_INT);
+        $sth->execute();
+
+        while ($row = $sth->fetch(\PDO::FETCH_NUM, \PDO::FETCH_ORI_NEXT)) {
+            return $this->setInstanceFromRow($row);
+        }
+
+        return null;
+    }
 }

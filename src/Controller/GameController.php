@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\Database;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\GameRepository;
@@ -42,6 +43,26 @@ class GameController extends AbstractController
             'page_title' => 'Parties',
             'games' => $games,
             'users_by_games' => $usersByGames
+        ]);
+    }
+
+    /**
+    * @Route("/games/{gameId}", name="games_details", requirements={"gameId"="\d+"})
+    */
+    public function details(int $gameId): Response
+    {
+        $game = $this->gameRepository->find($gameId);
+
+        if (!$game) {
+            throw $this->createNotFoundException();
+        }
+
+        $gameUsers = $this->userRepository->findGameUsers($gameId);
+
+        return $this->render('game/details.html.twig', [
+            'page_title' => 'Partie '.$game->getLabel(),
+            'game' => $game,
+            'game_users' => $gameUsers
         ]);
     }
 }
