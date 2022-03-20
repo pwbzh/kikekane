@@ -28,6 +28,7 @@ class GameController extends AbstractController
         $games = $this->gameRepository->findAll();
 
         return $this->render('game/list.html.twig', [
+            'page_title' => 'Parties',
             'games' => $games,
         ]);
     }

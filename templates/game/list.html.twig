@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<p class="lead">Parties</p>
-
 {% if games and games|length > 0 %}
         {% for game in games %}
             <div class="card mb-3">
