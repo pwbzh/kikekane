@@ -52,6 +52,17 @@ class PublicFigureEntity
         return $this->deathDate;
     }
 
+    public function getAge(): ?int
+    {
+        $endDate = date('Y-m-d');
+
+        if ($this->deathDate) {
+            $endDate = $this->deathDate->format('Y-m-d');
+        }
+
+        return date_diff(date_create($this->birthDate->format('Y-m-d')), date_create($endDate))->format('%y');
+    }
+
     public function setWikipedia(?string $wikipedia)
     {
         $this->wikipedia = $wikipedia;
