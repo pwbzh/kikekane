@@ -1,7 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<span class="badge bg-info">{{ game.year|date("Y") }}</span>
-<span class="badge {% if game_users|length == 0 %}bg-warning{% else %}bg-secondary{% endif %}">{% if game_users %}{{ game_users|length }} {% if game_users|length > 1 %}joueurs{% else %}joueur{% endif %}{% else %}0 joueur{% endif %}</span>
-<span class="badge {% if game.isOpenBets %}bg-success{% else %}bg-danger{% endif %}">{% if game.isOpenBets %}Paris ouverts{% else %}Paris fermés{% endif %}</span>
+<div class="mb-4">
+    <span class="badge bg-info">{{ game.year|date("Y") }}</span>
+    <span class="badge {% if game_users|length == 0 %}bg-warning{% else %}bg-secondary{% endif %}">{% if game_users %}{{ game_users|length }} {% if game_users|length > 1 %}joueurs{% else %}joueur{% endif %}{% else %}0 joueur{% endif %}</span>
+    <span class="badge {% if game.isOpenBets %}bg-success{% else %}bg-danger{% endif %}">{% if game.isOpenBets %}Paris ouverts{% else %}Paris fermés{% endif %}</span>
+</div>
+
+{% if game_users %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Joueurs</h5>
+
+            {% for user in game_users %}
+                <span class="me-3"><a class="text-white" href="{{ path('users_list') }}#user-{{ user.id }}">{{ user.login }}</a></span>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 {% endblock %}

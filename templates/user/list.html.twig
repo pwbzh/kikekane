@@ -3,7 +3,7 @@
 {% block body %}
 {% if users and users|length > 0 %}
         {% for user in users %}
-            <div class="card mb-3">
+            <div class="card mb-3" id="user-{{ user.id }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ user.login }}</h5>
                     {% if user.isAdmin %}<span class="badge bg-info">Administrateur</span>{% endif %} {% if user.lastLoginDatetime %}<span class="badge bg-secondary">Dernière connexion : {{ user.lastLoginDatetime|date("d/m/Y H:i:s") }}</span>{% endif %}

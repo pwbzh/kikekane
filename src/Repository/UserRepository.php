@@ -27,7 +27,7 @@ class UserRepository
 
     public function findAll(): array
     {
-        $sqlRequest = 'SELECT id, login, email, is_admin, last_login_datetime FROM user';
+        $sqlRequest = 'SELECT id, login, email, is_admin, last_login_datetime FROM user ORDER BY login';
 
         $sth = $this->database->prepare($sqlRequest);
         $sth->execute();
@@ -43,7 +43,7 @@ class UserRepository
 
     public function findGameUsers(int $gameId): array
     {
-        $sqlRequest = 'SELECT id, login, email, is_admin, last_login_datetime FROM user WHERE id IN (SELECT user_id FROM game_user WHERE game_id = :game_id)';
+        $sqlRequest = 'SELECT id, login, email, is_admin, last_login_datetime FROM user WHERE id IN (SELECT user_id FROM game_user WHERE game_id = :game_id) ORDER BY login';
 
         $sth = $this->database->prepare($sqlRequest);
         $sth->bindParam('game_id', $gameId, \PDO::PARAM_INT);

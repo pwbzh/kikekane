@@ -26,7 +26,7 @@ class GameRepository
 
     public function findAll(): array
     {
-        $sqlRequest = 'SELECT id, label, year, open_bets FROM game';
+        $sqlRequest = 'SELECT id, label, year, open_bets FROM game ORDER BY id DESC';
 
         $sth = $this->database->prepare($sqlRequest);
         $sth->execute();

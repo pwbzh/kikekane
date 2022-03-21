@@ -29,7 +29,7 @@ class PublicFigureRepository
 
     public function findAll(): array
     {
-        $sqlRequest = 'SELECT id, name, birth_date, death_date, wikipedia, twitter, note FROM public_figure';
+        $sqlRequest = 'SELECT id, name, birth_date, death_date, wikipedia, twitter, note FROM public_figure ORDER BY name';
 
         $sth = $this->database->prepare($sqlRequest);
         $sth->execute();
