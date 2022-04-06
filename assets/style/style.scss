@@ -19,3 +19,22 @@ $card-box-shadow: 0 .5rem 1rem rgba(#000000, .15);
         transition-duration: 300ms;
     }
 }
+
+.kikekane-card-title .card-title a {
+    color: $body-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.kikekane-card-bets .list-group-item {
+    background-color: #6c757d;
+    color: $body-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

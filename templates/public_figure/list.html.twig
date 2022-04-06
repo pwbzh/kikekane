@@ -3,7 +3,7 @@
 {% block body %}
 {% if public_figures and public_figures|length > 0 %}
         {% for public_figure in public_figures %}
-            <div class="card mb-3">
+            <div class="card mb-3" id="public-figure-{{ public_figure.id }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ public_figure.name }}</h5>
                     <span class="badge {% if not public_figure.deathDate %}bg-danger{% else %}bg-secondary{% endif %}">{{ public_figure.birthDate|date("d/m/Y") }} > {% if public_figure.deathDate %}{{ public_figure.deathDate|date("d/m/Y") }}{% else %}?{% endif %}</span> <span class="badge bg-info">{{ public_figure.getAge }} {% if public_figure.getAge > 1 %}ans{% else %}an{% endif %}</span>
