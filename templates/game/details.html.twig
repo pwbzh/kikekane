@@ -7,6 +7,31 @@
     <span class="badge {% if game.isOpenBets %}bg-success{% else %}bg-danger{% endif %}">{% if game.isOpenBets %}Paris ouverts{% else %}Paris fermés{% endif %}</span>
 </div>
 
+{% if results %}
+    <div class="table-responsive">
+        <table class="table table-hover mb-5">
+            <thead>
+                <tr>
+                    <th>Classement</th>
+                    <th>Joueur</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user_id, points in results %}
+                    <tr>
+                        <td># {{ loop.index }}</td>
+                        <td>{% if user_id in game_users|keys %}{{ game_users[user_id].login }}{% else %}{{ user_id }}{% endif %}</td>
+                        <td>{{ points }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p class="text-danger">Pas de classement disponible pour cette partie.</p>
+{% endif %}
+
 {% if bets and game_users %}
     {% for user in game_users %}
         <div class="card mb-3">
@@ -16,9 +41,7 @@
             {% if user.id in bets|keys %}
                 <ul class="list-group list-group-flush kikekane-card-bets">
                 {% for public_figure_id in bets[user.id] %}
-                    {% if public_figure_id in public_figures|keys %}
-                        <a class="list-group-item" href="{{ path('public_figures_list') }}#public-figure-{{ public_figure_id }}">{{ public_figures[public_figure_id].name }}</a>
-                    {% endif %}
+                    <a class="list-group-item" href="{{ path('public_figures_list') }}#public-figure-{{ public_figure_id }}">{% if public_figure_id in public_figures|keys %}{{ public_figures[public_figure_id].name }} {% if public_figures[public_figure_id].getDeathDate and public_figures[public_figure_id].getDeathDate|date("Y") == game.year|date("Y") %}<span class="badge bg-secondary text-dark">Trépassé en {{ game.year|date("Y") }}</span>{% endif %}{% else %}{{ public_figure_id }}{% endif %}</a>
                 {% endfor %}
                 </ul>
             {% else %}

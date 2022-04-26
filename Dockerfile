@@ -11,8 +11,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && apt update \
     && apt install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip \
     && docker-php-ext-install intl opcache pdo pdo_mysql \
-    && pecl install apcu \
-    && docker-php-ext-enable apcu \
+    && pecl install apcu xdebug \
+    && docker-php-ext-enable apcu xdebug \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 

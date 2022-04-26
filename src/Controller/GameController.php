@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\Database;
+use App\Service\Rule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,13 +16,15 @@ use App\Repository\PublicFigureRepository;
 class GameController extends AbstractController
 {
     private $database;
+    private $rule;
     private $gameRepository;
     private $userRepository;
     private $betRepository;
 
-    public function __construct(Database $database)
+    public function __construct(Database $database, Rule $rule)
     {
         $this->database = $database->getDatabase();
+        $this->rule = $rule;
         $this->gameRepository = new GameRepository($this->database);
         $this->userRepository = new UserRepository($this->database);
         $this->betRepository = new BetRepository($this->database);
@@ -66,12 +69,15 @@ class GameController extends AbstractController
         $gameUsers = $this->userRepository->findGameUsers($gameId);
         $bets = $this->betRepository->find($gameId);
 
+        $results = $this->rule->getResults($game->getYear()->format('Y'), $bets, $publicFigures);
+
         return $this->render('game/details.html.twig', [
             'page_title' => 'Partie '.$game->getLabel(),
             'game' => $game,
             'game_users' => $gameUsers,
             'bets' => $bets,
-            'public_figures' => $publicFigures
+            'public_figures' => $publicFigures,
+            'results' => $results
         ]);
     }
 }
