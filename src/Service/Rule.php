@@ -4,12 +4,14 @@ namespace App\Service;
 
 class Rule
 {
-    public function getBonus(int $year, array $bets, array $publicFigures): ?array
+    public function getBonus(int $year, ?array $bets, ?array $publicFigures): ?array
     {
         $firstDead = null;
         $lastDead = null;
-        $solo = null;
-        $duo = null;
+        $solo = array();
+        $duo = array();
+
+        $betsNumber = array();
 
         if ($bets) {
             foreach ($bets as $userId => $publicFiguresId) {
@@ -23,16 +25,32 @@ class Rule
                                 continue;
                             }
 
-                            if (!$firstDead || $publicFigure->getDeathDate() < $firstDead->getDeathDate()) {
+                            if (!$firstDead || $publicFigure->getDeathDate() < $publicFigures[$firstDead]->getDeathDate()) {
                                 $firstDead = $publicFigure->getId();
                             }
 
-                            if (!$lastDead || $publicFigure->getDeathDate() > $lastDead->getDeathDate()) {
+                            if (!$lastDead || $publicFigure->getDeathDate() > $publicFigures[$lastDead]->getDeathDate()) {
                                 $lastDead = $publicFigure->getId();
+                            }
+
+                            if (isset($betsNumber[$publicFigureId])) {
+                                ++$betsNumber[$publicFigureId];
+                            } else {
+                                $betsNumber[$publicFigureId] = 1;
                             }
                         }
                     }
                 }
+            }
+        }
+
+        foreach ($betsNumber as $publicFigureId => $betsNumber) {
+            if ($betsNumber == 1) {
+                $solo[] = $publicFigureId;
+            }
+
+            if ($betsNumber == 2) {
+                $duo[] = $publicFigureId;
             }
         }
 
@@ -44,7 +62,7 @@ class Rule
         );
     }
 
-    public function getResults(int $year, array $bets, array $publicFigures): ?array
+    public function getResults(int $year, ?array $bets, ?array $publicFigures): ?array
     {
         $results = null;
         $bonus = $this->getBonus($year, $bets, $publicFigures);
@@ -92,6 +110,14 @@ class Rule
                             if ($bonus['last_dead'] == $publicFigureId) {
                                 $results[$userId] += 5;
                             }
+
+                            if (in_array($publicFigureId, $bonus['solo'])) {
+                                $results[$userId] += 3;
+                            }
+
+                            if (in_array($publicFigureId, $bonus['duo'])) {
+                                $results[$userId] += 2;
+                            }
                         }
                     }
                 }
@@ -100,7 +126,7 @@ class Rule
 
         // Sort results
         if (is_array($results)) {
-            krsort($results);
+            arsort($results);
         }
 
         return $results;

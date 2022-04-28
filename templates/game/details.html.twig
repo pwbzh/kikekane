@@ -18,12 +18,21 @@
                 </tr>
             </thead>
             <tbody>
+                {% set ranking = 0 %}
+                {% set ranking_points = 0 %}
+                {% set show_ranking = true %}
                 {% for user_id, points in results %}
+                    {% if ranking_points != points %}
+                        {% set ranking = ranking + 1 %}
+                        {% set ranking_points = points %}
+                        {% set show_ranking = true %}
+                    {% endif %}
                     <tr>
-                        <td># {{ loop.index }}</td>
+                        <td>{% if show_ranking %}# {{ ranking }}{% endif %}</td>
                         <td>{% if user_id in game_users|keys %}{{ game_users[user_id].login }}{% else %}{{ user_id }}{% endif %}</td>
                         <td>{{ points }}</td>
                     </tr>
+                    {% set show_ranking = false %}
                 {% endfor %}
             </tbody>
         </table>
@@ -41,7 +50,33 @@
             {% if user.id in bets|keys %}
                 <ul class="list-group list-group-flush kikekane-card-bets">
                 {% for public_figure_id in bets[user.id] %}
-                    <a class="list-group-item" href="{{ path('public_figures_list') }}#public-figure-{{ public_figure_id }}">{% if public_figure_id in public_figures|keys %}{{ public_figures[public_figure_id].name }} {% if public_figures[public_figure_id].getDeathDate and public_figures[public_figure_id].getDeathDate|date("Y") == game.year|date("Y") %}<span class="badge bg-secondary text-dark">Trépassé en {{ game.year|date("Y") }}</span>{% endif %}{% else %}{{ public_figure_id }}{% endif %}</a>
+                    <a class="list-group-item" href="{{ path('public_figures_list') }}#public-figure-{{ public_figure_id }}">
+                        {% if public_figure_id in public_figures|keys %}
+                            <span class="me-2">{{ public_figures[public_figure_id].name }}</span>
+                            <span class="float-end">
+                                {% if public_figures[public_figure_id].getDeathDate and public_figures[public_figure_id].getDeathDate|date("Y") == game.year|date("Y") %}
+                                    <span class="badge bg-light text-dark">Trépassé en {{ game.year|date("Y") }}</span>
+                                {% endif %}
+                                {% if bonus['first_dead'] == public_figure_id %}
+                                    <span class="badge bg-light text-dark">Bloody Kill (first)</span>
+                                {% endif %}
+                                {% if bonus['last_dead'] == public_figure_id %}
+                                    <span class="badge bg-light text-dark">Bloody Kill (last)</span>
+                                {% endif %}
+                                {% if public_figure_id in bonus['solo'] %}
+                                    <span class="badge bg-light text-dark">Solo</span>
+                                {% endif %}
+                                {% if public_figure_id in bonus['duo'] %}
+                                    <span class="badge bg-light text-dark">Duo</span>
+                                {% endif %}
+                                {% if public_figures[public_figure_id].getAge == 27 %}
+                                    <span class="badge bg-light text-dark">Club des 27</span>
+                                {% endif %}
+                            </span>
+                        {% else %}
+                            {{ public_figure_id }}
+                        {% endif %}
+                    </a>
                 {% endfor %}
                 </ul>
             {% else %}

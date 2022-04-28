@@ -70,6 +70,7 @@ class GameController extends AbstractController
         $bets = $this->betRepository->find($gameId);
 
         $results = $this->rule->getResults($game->getYear()->format('Y'), $bets, $publicFigures);
+        $bonus = $this->rule->getBonus($game->getYear()->format('Y'), $bets, $publicFigures);
 
         return $this->render('game/details.html.twig', [
             'page_title' => 'Partie '.$game->getLabel(),
@@ -77,7 +78,8 @@ class GameController extends AbstractController
             'game_users' => $gameUsers,
             'bets' => $bets,
             'public_figures' => $publicFigures,
-            'results' => $results
+            'results' => $results,
+            'bonus' => $bonus
         ]);
     }
 }
